@@ -19,5 +19,7 @@ jobs:
         pip install -r requirements.txt
     - name: Install Playwright browsers
       run: playwright install
+    - name: List files
+      run: ls -R
     - name: Run Playwright tests
       run: python -m unittest discover -s . -p "test_*.py"
