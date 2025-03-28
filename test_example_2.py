@@ -3,7 +3,7 @@ from playwright.sync_api import sync_playwright, expect
 def test_duckduckgo_search():
     with sync_playwright() as p:
         # Launch the browser
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(headless=True)
         
         # Create a new page
         page = browser.new_page()

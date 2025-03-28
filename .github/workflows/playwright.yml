@@ -22,4 +22,4 @@ jobs:
     - name: List files
       run: ls -R
     - name: Run Playwright tests
-      run: xvfb-run python test_example_2.py
+      run: python test_example_2.py
