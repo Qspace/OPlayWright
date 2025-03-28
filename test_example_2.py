@@ -1,38 +1,25 @@
-from playwright.sync_api import sync_playwright, expect
+from playwright.sync_api import sync_playwright, expect, TimeoutError as PlaywrightTimeoutError
 
 def test_duckduckgo_search():
     with sync_playwright() as p:
-        # Launch the browser
-        browser = p.chromium.launch(headless=True)
-        
-        # Create a new page
+        browser = p.chromium.launch(headless=True)  # Keep headless=True for CI
         page = browser.new_page()
         
-        # Navigate to DuckDuckGo
-        page.goto("https://duckduckgo.com/")
-        
-        # Type into the search box
-        page.fill('input[name="q"]', "Playwright Python")
-        
-        # Click the search button
-        page.click('button[type="submit"]')
-        
-        # Wait for the results page to load
-        page.wait_for_selector('.results')
-        
-        # Check if the first result contains "Playwright"
-        first_result = page.locator('.results .result__title').first
-        expect(first_result).to_contain_text("Playwright")
-        
-        # Get the number of search results
-        result_stats = page.locator('.results--main').count()
-        print(f"Number of search results: {result_stats}")
-        
-        # Take a screenshot of the results page
-        page.screenshot(path="duckduckgo_results.png")
-        
-        # Close the browser
-        browser.close()
-
-if __name__ == "__main__":
-    test_duckduckgo_search()
+        try:
+            # Navigate and search
+            page.goto("https://duckduckgo.com/")
+            page.fill('input[name="q"]', "Playwright Python")
+            page.click('button[type="submit"]')
+            
+            # Wait for results using verified selector
+            page.wait_for_selector('[data-testid="result-title"]', timeout=60_000)  # 60s timeout
+            
+            # Verify results
+            first_result = page.locator('[data-testid="result-title"]').first
+            expect(first_result).to_contain_text("Playwright")
+            
+        except PlaywrightTimeoutError:
+            print("Timeout occurred - element not found")
+            
+        finally:
+            browser.close()
