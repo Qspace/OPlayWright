@@ -1,9 +1,9 @@
 name: Playwright Tests
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -20,4 +20,4 @@ jobs:
     - name: Install Playwright browsers
       run: playwright install
     - name: Run Playwright tests
-      run: python test_example.py
+      python -m unittest discover -s . -p "test_*.py"
