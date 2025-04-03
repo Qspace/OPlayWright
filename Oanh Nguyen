@@ -1,0 +1,44 @@
+#VARIABLE
+
+##Declare
+a=1
+b=5
+print(a+b)
+print('I have'+' '+ str(a) +' '+'apple')#str to convert int to str
+
+##Loop
+a=a+10 #update value by adding 2
+a+=10 #update value by adding 2
+a-=3 #update value by substract 3 
+print (a)
+
+##If
+if a>20:
+    print('Too much')
+elif a>15: #add AND condition
+    print('Much')
+    if a>17:  #nest condition to check a condition, only if another condition is true.
+       print('Fairly much')
+else:
+    print('Little')
+
+
+#ARRAY
+##Declare
+myFruits = ['banana','apple','orange']
+##Manipulate
+myFruits.append('oanh')
+myFruits.insert(0,'uyen')
+myFruits.pop(2)
+print(myFruits)
+##Count length
+print(len(myFruits))
+##Loop array: to view one by one values in the array
+for fruit in myFruits:
+  print(fruit)
+  if fruit=='banana':
+   print('I have a banana')
+   break
+#  OR
+# for i in range(len(myFruits)): (Range to count variable for the indexes)
+#   print(myFruits[i])
